@@ -1,0 +1,22 @@
+{
+  "name": "network-anomaly-detection-web",
+  "version": "1.0.0",
+  "description": "Machine Learning-Based Network Anomaly Detection Web Application",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve . -l 3000",
+    "dev": "serve . -l 3000",
+    "serve": "serve . -l 3000"
+  },
+  "keywords": [
+    "network-anomaly-detection",
+    "cybersecurity",
+    "machine-learning",
+    "dashboard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

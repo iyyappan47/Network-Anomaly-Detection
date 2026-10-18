@@ -1,0 +1,21 @@
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment and secret files
+.env
+.env.*
+
+# Temporary files and backups
+temp/
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db

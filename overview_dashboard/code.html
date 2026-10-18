@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Network Anomaly Detection - Overview Dashboard</title>
+<!-- Tailwind CSS v3 with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for precise palette matching -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sidebar: '#0c2238',
+            'sidebar-hover': '#153350',
+            'sidebar-active': '#0084ff',
+            canvas: '#f3f6fa',
+            'card-border': '#e5e9f0',
+            'brand-blue': '#1c7ed6',
+            'brand-green': '#12b886',
+            'brand-red': '#fa5252',
+            'brand-purple': '#7950f2',
+            'brand-teal': '#15aabf'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style data-purpose="custom-layout">
+    /* Subtle custom scrollbar and canvas base styling */
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f3f6fa;
+      color: #1f2937;
+    }
+
+    /* Donut chart stroke animation and styling */
+    .donut-circle-bg {
+      stroke: #fa5252;
+      stroke-width: 24;
+      fill: none;
+    }
+    
+    .donut-circle-progress {
+      stroke: #12b886;
+      stroke-width: 24;
+      stroke-linecap: round;
+      fill: none;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex antialiased select-none text-slate-800">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-sidebar text-slate-300 flex flex-col justify-between shrink-0 min-h-screen border-r border-[#163554]" data-purpose="main-sidebar">
+<div>
+<!-- Brand Logo / Product Header -->
+<div class="px-5 py-5 flex items-center space-x-3">
+<div class="w-9 h-9 rounded-lg bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 shrink-0">
+<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+<path d="M9 12l2 2 4-4"></path>
+</svg>
+</div>
+<div class="leading-tight">
+<span class="block text-sm font-semibold text-white tracking-tight">Network Anomaly</span>
+<span class="block text-xs font-medium text-slate-400">Detection</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav aria-label="Sidebar Navigation" class="mt-4 px-3 space-y-1.5">
+<!-- Overview (Active) -->
+<a class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-white bg-sidebar-active font-medium text-sm shadow-sm transition" href="#overview">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Overview</span>
+</a>
+<!-- Model Performance -->
+<a class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-sidebar-hover font-medium text-sm transition" href="#performance">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Model Performance</span>
+</a>
+<!-- Detection Results -->
+<a class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-sidebar-hover font-medium text-sm transition" href="#results">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Detection Results</span>
+</a>
+<!-- Dataset Analysis -->
+<a class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-sidebar-hover font-medium text-sm transition" href="#analysis">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+<path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Dataset Analysis</span>
+</a>
+<!-- CSV Upload & Prediction -->
+<a class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-sidebar-hover font-medium text-sm transition" href="#upload">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">CSV Upload &amp; Prediction</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer / System Ready status -->
+<div class="p-4 border-t border-[#163554]/60">
+<div class="flex items-center space-x-2.5 text-xs text-slate-400">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<div class="leading-none">
+<p class="font-medium text-slate-200">System Ready</p>
+<span class="text-[10px] text-slate-500">v1.0.0</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- BEGIN: TopHeader -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-card-border bg-white sticky top-0 z-20" data-purpose="top-navigation-bar">
+<!-- Hamburger Toggle Icon -->
+<button aria-label="Toggle Navigation" class="text-slate-500 hover:text-slate-800 transition focus:outline-none" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+</button>
+<!-- Right Header Actions (Timestamp & User Profile) -->
+<div class="flex items-center space-x-6 text-sm">
+<!-- Date Badge -->
+<div class="flex items-center space-x-2 text-slate-500 font-normal">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<rect height="18" rx="2" ry="2" stroke-width="2" width="18" x="3" y="4"></rect>
+<line stroke-width="2" x1="16" x2="16" y1="2" y2="6"></line>
+<line stroke-width="2" x1="8" x2="8" y1="2" y2="6"></line>
+<line stroke-width="2" x1="3" x2="21" y1="10" y2="10"></line>
+</svg>
+<span class="tracking-tight text-xs">Oct 13, 2025 • 02:14 PM</span>
+</div>
+<!-- User Dropdown Pill -->
+<div class="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition">
+<div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center text-xs">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="font-medium text-slate-700 text-xs">Admin</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- Main Workspace Container -->
+<main class="flex-1 px-8 py-6 space-y-6 max-w-[1440px] w-full" data-purpose="dashboard-overview">
+<!-- BEGIN: PageHeading -->
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-slate-900">Overview</h1>
+<p class="text-xs text-slate-500 mt-1">Project summary, dataset statistics, model status and workflow at a glance.</p>
+</div>
+<!-- END: PageHeading -->
+<!-- BEGIN: MetricCardsRow -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" data-purpose="key-metrics-grid">
+<!-- Card 1: Total Records -->
+<div class="bg-white rounded-xl border border-card-border p-5 shadow-xs flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<ellipse cx="12" cy="5" rx="9" ry="3" stroke-width="2"></ellipse>
+<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" stroke-width="2"></path>
+<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs font-medium text-slate-500">Total Records</span>
+<div class="text-2xl font-bold text-slate-900 leading-tight">82,332</div>
+<span class="text-[11px] text-slate-400 font-medium">From UNSW-NB15</span>
+</div>
+</div>
+<!-- Card 2: Normal Records -->
+<div class="bg-white rounded-xl border border-card-border p-5 shadow-xs flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs font-medium text-slate-500">Normal Records</span>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold text-slate-900 leading-tight">67,343</span>
+</div>
+<span class="text-xs font-semibold text-emerald-600">(81.8%)</span>
+</div>
+</div>
+<!-- Card 3: Attack Records -->
+<div class="bg-white rounded-xl border border-card-border p-5 shadow-xs flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs font-medium text-slate-500">Attack Records</span>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold text-slate-900 leading-tight">14,989</span>
+</div>
+<span class="text-xs font-semibold text-rose-500">(18.2%)</span>
+</div>
+</div>
+<!-- Card 4: Model Status -->
+<div class="bg-white rounded-xl border border-card-border p-5 shadow-xs flex items-center space-x-4">
+<div class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs font-medium text-slate-500">Model Status</span>
+<div class="mt-1">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                Trained &amp; Ready
+              </span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: MetricCardsRow -->
+<!-- BEGIN: MainPanelsRow -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-5" data-purpose="charts-and-workflow-row">
+<!-- Left Card: Dataset Distribution Donut Chart -->
+<div class="lg:col-span-5 bg-white rounded-xl border border-card-border p-6 shadow-xs flex flex-col justify-between">
+<h2 class="text-sm font-semibold text-slate-800">Dataset Distribution</h2>
+<div class="py-6 flex flex-col sm:flex-row items-center justify-center gap-8">
+<!-- Donut Visual (81.8% green, 18.2% red) -->
+<div class="relative w-44 h-44 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90 transform" viewBox="0 0 200 200">
+<!-- Total Circle Background (Red 18.2%) -->
+<circle cx="100" cy="100" fill="transparent" r="74" stroke="#ef4444" stroke-width="20"></circle>
+<!-- Segment (Green 81.8%) Circumference ~ 465, 81.8% ~ 380 -->
+<circle cx="100" cy="100" fill="transparent" r="74" stroke="#10b981" stroke-dasharray="465" stroke-dashoffset="84" stroke-linecap="butt" stroke-width="20"></circle>
+</svg>
+<!-- Central Donut Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-xl font-bold text-slate-900 leading-none">82,332</span>
+<span class="text-[11px] font-medium text-slate-400 mt-1">Total Records</span>
+</div>
+<!-- Inline Pill callouts matching UI -->
+<span class="absolute top-4 left-4 bg-rose-500 text-white text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-xs">
+                18.2%
+              </span>
+<span class="absolute bottom-4 right-4 bg-emerald-500 text-white text-[10px] font-semibold px-1.5 py-0.5 rounded shadow-xs">
+                81.8%
+              </span>
+</div>
+<!-- Chart Legends -->
+<div class="space-y-4">
+<!-- Normal Legend -->
+<div class="flex items-start space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1 shrink-0"></span>
+<div>
+<p class="text-xs font-semibold text-slate-800">Normal</p>
+<p class="text-xs text-slate-500 font-medium">67,343 (81.8%)</p>
+</div>
+</div>
+<!-- Attack Legend -->
+<div class="flex items-start space-x-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-rose-500 mt-1 shrink-0"></span>
+<div>
+<p class="text-xs font-semibold text-slate-800">Attack</p>
+<p class="text-xs text-slate-500 font-medium">14,989 (18.2%)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-1"></div>
+</div>
+<!-- Right Card: Project Workflow Pipeline -->
+<div class="lg:col-span-7 bg-white rounded-xl border border-card-border p-6 shadow-xs flex flex-col justify-between">
+<h2 class="text-sm font-semibold text-slate-800 mb-4">Project Workflow</h2>
+<!-- Steps Horizontal Pipeline -->
+<div class="py-6 flex items-center justify-between gap-1 overflow-x-auto">
+<!-- Step 1: Dataset -->
+<div class="flex flex-col items-center text-center flex-1 min-w-[100px]">
+<div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-500 mb-3 shadow-2xs">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<ellipse cx="12" cy="5" rx="9" ry="3" stroke-width="2"></ellipse>
+<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" stroke-width="2"></path>
+<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-slate-800">1. Dataset</p>
+<p class="text-[11px] text-slate-400 mt-1 leading-snug">Load UNSW-NB15<br>dataset</p>
+</div>
+<!-- Flow Arrow 1 -->
+<div class="text-slate-300 pb-8 shrink-0">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Step 2: Preprocessing -->
+<div class="flex flex-col items-center text-center flex-1 min-w-[100px]">
+<div class="w-12 h-12 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 mb-3 shadow-2xs">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-slate-800">2. Preprocessing</p>
+<p class="text-[11px] text-slate-400 mt-1 leading-snug">Clean &amp; transform<br>data</p>
+</div>
+<!-- Flow Arrow 2 -->
+<div class="text-slate-300 pb-8 shrink-0">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Step 3: Model Training -->
+<div class="flex flex-col items-center text-center flex-1 min-w-[100px]">
+<div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 mb-3 shadow-2xs">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-slate-800">3. Model Training</p>
+<p class="text-[11px] text-slate-400 mt-1 leading-snug">Random Forest</p>
+</div>
+<!-- Flow Arrow 3 -->
+<div class="text-slate-300 pb-8 shrink-0">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Step 4: Prediction -->
+<div class="flex flex-col items-center text-center flex-1 min-w-[100px]">
+<div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 mb-3 shadow-2xs">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-slate-800">4. Prediction</p>
+<p class="text-[11px] text-slate-400 mt-1 leading-snug">Detect anomalies</p>
+</div>
+</div>
+<div class="h-1"></div>
+</div>
+</section>
+<!-- END: MainPanelsRow -->
+<!-- BEGIN: BottomInfoBanner -->
+<section data-purpose="notification-callout">
+<div class="bg-blue-50/70 border border-blue-100 rounded-xl px-4 py-3.5 flex items-center space-x-3 text-xs text-blue-800">
+<svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<line x1="12" x2="12" y1="16" y2="12"></line>
+<line x1="12" x2="12.01" y1="8" y2="8"></line>
+</svg>
+<p class="font-normal">
+            The model is ready for prediction. You can now <a class="underline font-medium hover:text-blue-900 transition" href="#upload">upload a CSV file</a> to test new data.
+          </p>
+</div>
+</section>
+<!-- END: BottomInfoBanner -->
+</main>
+</div>
+<!-- END: MainContentArea -->
+
+
+</body></html>

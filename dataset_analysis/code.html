@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Dataset Analysis - Network Anomaly Detection</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Tailwind Config -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sidebar: '#0D233A',
+            sidebarHover: '#163351',
+            sidebarActive: '#1D4ED8',
+            canvasBg: '#F4F7FB',
+            cardBg: '#FFFFFF',
+            chartGreen: '#10B981',
+            chartRed: '#EF4444',
+            chartBlue: '#2563EB',
+            chartTeal: '#06B6D4',
+            chartOrange: '#F97316',
+            chartGray: '#94A3B8',
+            chartPurple: '#8B5CF6'
+          }
+        }
+      }
+    }
+  </script>
+<!-- Chart & layout styles -->
+<style data-purpose="custom-utilities">
+    .donut-segment {
+      transform-origin: 50% 50%;
+      transition: stroke-dasharray 0.3s ease;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F7FB] text-slate-800 antialiased font-sans">
+<div class="flex min-h-screen">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-[#0D233A] text-slate-300 flex flex-col justify-between shrink-0 select-none" data-purpose="sidebar-navigation">
+<!-- Top Brand & Navigation -->
+<div>
+<!-- Logo and App Title -->
+<div class="flex items-center gap-3 px-6 py-5 border-b border-slate-700/50">
+<div class="flex items-center justify-center w-9 h-9 rounded-lg bg-blue-600/30 text-blue-400 border border-blue-500/40">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h1 class="text-sm font-semibold text-white tracking-tight leading-tight">Network Anomaly</h1>
+<p class="text-xs text-slate-400">Detection</p>
+</div>
+</div>
+<!-- Navigation Menu Items -->
+<nav class="mt-4 px-3 space-y-1">
+<!-- Overview -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#163351] hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Overview
+          </a>
+<!-- Model Performance -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#163351] hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Model Performance
+          </a>
+<!-- Detection Results -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#163351] hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Detection Results
+          </a>
+<!-- Dataset Analysis (Active Pill) -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium bg-[#1D4ED8] text-white shadow-sm transition-colors" href="#">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Dataset Analysis
+          </a>
+<!-- CSV Upload & Prediction -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-[#163351] hover:text-white transition-colors" href="#">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            CSV Upload &amp; Prediction
+          </a>
+</nav>
+</div>
+<!-- Bottom System Status -->
+<div class="p-4 border-t border-slate-700/40">
+<div class="flex items-center gap-2.5">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<div class="text-[11px] text-slate-300">
+<p class="font-medium text-slate-200 leading-tight">System Ready</p>
+<p class="text-[10px] text-slate-400">v1.0.0</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentArea -->
+<div class="flex-1 flex flex-col overflow-hidden min-w-0">
+<!-- BEGIN: TopBar -->
+<header class="bg-white border-b border-slate-200/80 px-8 flex items-center justify-between z-10 shrink-0 h-16">
+<!-- Breadcrumb / Placeholder area -->
+<div class="flex items-center text-xs text-slate-400">
+<span class="text-slate-600 font-medium">Dashboard</span>
+<span class="mx-2">/</span>
+<span class="text-blue-600 font-medium">Dataset Analysis</span>
+</div>
+<!-- Date & Profile Section -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">Oct 13, 2025</span>
+<span class="text-slate-300">•</span>
+<span class="">02:14 PM</span>
+</div>
+<!-- User Badge -->
+<div class="flex items-center gap-2 pl-4 border-l border-slate-200">
+<div class="w-7 h-7 rounded-full bg-slate-800 text-white flex items-center justify-center font-medium text-xs">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-xs font-semibold text-slate-700">Admin</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- Main Body Container -->
+<main class="flex-1 overflow-y-auto custom-scroll space-y-6 px-8 py-6 min-w-0">
+<!-- Header Titles -->
+<div data-purpose="page-heading">
+<h2 class="text-xl font-bold text-slate-900 tracking-tight">Dataset Analysis</h2>
+<p class="text-xs text-slate-500 mt-0.5">Visual insights into the dataset distribution and attack types.</p>
+</div>
+<!-- BEGIN: Row1-AnalyticalCards -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-purpose="row-1-charts">
+<!-- Card 1: Traffic Distribution -->
+<div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="traffic-distribution-card">
+<h3 class="text-xs font-semibold text-slate-800 mb-4">Traffic Distribution</h3>
+<div class="flex items-center justify-around my-auto">
+<!-- Inline Donut Chart (Traffic) -->
+<div class="relative w-44 h-44 flex items-center justify-center">
+<svg class="w-44 h-44 -rotate-90 transform" viewBox="0 0 120 120">
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#F1F5F9" stroke-width="16"></circle>
+<!-- Attack: 18.2% -> Dasharray = (18.2 * 3.016) = 54.9, gap remainder -->
+<!-- Normal: 81.8% -> Dasharray = (81.8 * 3.016) = 246.7 -->
+<!-- Circumference = 2 * PI * 48 = 301.59 -->
+<circle class="donut-segment" cx="60" cy="60" fill="transparent" r="48" stroke="#EF4444" stroke-dasharray="54.9 301.6" stroke-dashoffset="0" stroke-linecap="butt" stroke-width="16"></circle>
+<circle class="donut-segment" cx="60" cy="60" fill="transparent" r="48" stroke="#10B981" stroke-dasharray="246.7 301.6" stroke-dashoffset="-54.9" stroke-linecap="butt" stroke-width="16"></circle>
+</svg>
+<!-- Percentage Badges inside chart perimeter -->
+<div class="absolute top-5 left-5 text-[10px] font-bold text-rose-500 bg-white/90 px-1 py-0.5 rounded shadow-xs">18.2%</div>
+<div class="absolute bottom-5 right-7 text-[10px] font-bold text-emerald-600 bg-white/90 px-1 py-0.5 rounded shadow-xs">81.8%</div>
+<!-- Center Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+<span class="text-base font-bold text-slate-800 leading-tight">82,332</span>
+<span class="text-[10px] text-slate-400 font-medium">Total Records</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="space-y-3.5 text-xs">
+<div class="flex items-start gap-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#10B981] mt-1 shrink-0"></span>
+<div>
+<span class="font-semibold text-slate-800 text-xs block">Normal</span>
+<span class="text-[11px] text-slate-500">67,343 (81.8%)</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#EF4444] mt-1 shrink-0"></span>
+<div>
+<span class="font-semibold text-slate-800 text-xs block">Attack</span>
+<span class="text-[11px] text-slate-500">14,989 (18.2%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Attack Categories -->
+<div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="attack-categories-card">
+<h3 class="text-xs font-semibold text-slate-800 mb-3">Attack Categories</h3>
+<!-- Horizontal Bars -->
+<div class="space-y-3.5 my-auto">
+<!-- DoS -->
+<div class="space-y-1">
+<div class="flex items-center text-xs">
+<span class="w-12 text-slate-500 font-medium text-[11px]">DoS</span>
+<div class="flex-1 bg-slate-100 rounded-sm h-4 overflow-hidden relative mr-3">
+<div class="h-full bg-rose-500 rounded-sm" style="width: 70.15%;"></div>
+</div>
+<span class="text-[11px] font-semibold text-slate-700 w-10 text-right">4,209</span>
+</div>
+</div>
+<!-- Probe -->
+<div class="space-y-1">
+<div class="flex items-center text-xs">
+<span class="w-12 text-slate-500 font-medium text-[11px]">Probe</span>
+<div class="flex-1 bg-slate-100 rounded-sm h-4 overflow-hidden relative mr-3">
+<div class="h-full bg-amber-500 rounded-sm" style="width: 51.7%;"></div>
+</div>
+<span class="text-[11px] font-semibold text-slate-700 w-10 text-right">3,102</span>
+</div>
+</div>
+<!-- R2L -->
+<div class="space-y-1">
+<div class="flex items-center text-xs">
+<span class="w-12 text-slate-500 font-medium text-[11px]">R2L</span>
+<div class="flex-1 bg-slate-100 rounded-sm h-4 overflow-hidden relative mr-3">
+<div class="h-full bg-indigo-500 rounded-sm" style="width: 41.45%;"></div>
+</div>
+<span class="text-[11px] font-semibold text-slate-700 w-10 text-right">2,487</span>
+</div>
+</div>
+<!-- U2R -->
+<div class="space-y-1">
+<div class="flex items-center text-xs">
+<span class="w-12 text-slate-500 font-medium text-[11px]">U2R</span>
+<div class="flex-1 bg-slate-100 rounded-sm h-4 overflow-hidden relative mr-3">
+<div class="h-full bg-blue-500 rounded-sm" style="width: 19.85%;"></div>
+</div>
+<span class="text-[11px] font-semibold text-slate-700 w-10 text-right">1,191</span>
+</div>
+</div>
+</div>
+<!-- X-Axis ticks -->
+<div class="pt-2 border-t border-slate-100 pl-12 pr-12 flex justify-between text-[10px] text-slate-400 font-medium">
+<span class="">0</span>
+<span class="">2K</span>
+<span class="">4K</span>
+<span class="">6K</span>
+</div>
+</div>
+<!-- Card 3: Protocol Distribution -->
+<div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="protocol-distribution-card">
+<h3 class="text-xs font-semibold text-slate-800 mb-4">Protocol Distribution</h3>
+<div class="flex items-center justify-around my-auto">
+<!-- Inline Donut Chart (Protocols) -->
+<div class="relative w-40 h-40 flex items-center justify-center">
+<!-- Circumference = 2 * PI * 48 = 301.59 -->
+<svg class="w-40 h-40 -rotate-90 transform" viewBox="0 0 120 120">
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#F1F5F9" stroke-width="15"></circle>
+<!-- TCP: 53.2% = 160.45 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#2563EB" stroke-dasharray="160.45 301.6" stroke-dashoffset="0" stroke-width="15"></circle>
+<!-- UDP: 28.7% = 86.56 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#06B6D4" stroke-dasharray="86.56 301.6" stroke-dashoffset="-160.45" stroke-width="15"></circle>
+<!-- ICMP: 12.6% = 38.0 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#F97316" stroke-dasharray="38.0 301.6" stroke-dashoffset="-247.01" stroke-width="15"></circle>
+<!-- Other: 5.5% = 16.59 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#94A3B8" stroke-dasharray="16.59 301.6" stroke-dashoffset="-285.01" stroke-width="15"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+<span class="text-sm font-bold text-slate-800 leading-tight">82,332</span>
+<span class="text-[9px] text-slate-400 font-medium">Total Records</span>
+</div>
+</div>
+<!-- Legend Items -->
+<div class="space-y-2 text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+<span class="text-slate-600 font-medium text-[11px] w-12">TCP</span>
+<span class="font-semibold text-slate-800 text-[11px]">53.2%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+<span class="text-slate-600 font-medium text-[11px] w-12">UDP</span>
+<span class="font-semibold text-slate-800 text-[11px]">28.7%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
+<span class="text-slate-600 font-medium text-[11px] w-12">ICMP</span>
+<span class="font-semibold text-slate-800 text-[11px]">12.6%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+<span class="text-slate-600 font-medium text-[11px] w-12">Other</span>
+<span class="font-semibold text-slate-800 text-[11px]">5.5%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- END: Row1-AnalyticalCards -->
+<!-- BEGIN: Row2-DetailedMetrics -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6" data-purpose="row-2-charts">
+<!-- Left Chart: Traffic by Class (Percentage) -->
+<div class="lg:col-span-7 bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="traffic-by-class-card">
+<h3 class="text-xs font-semibold text-slate-800 mb-6">Traffic by Class (Percentage)</h3>
+<!-- Bar Chart with Grid -->
+<div class="relative flex items-end justify-between pt-6 pb-2 px-6 h-52 border-b border-slate-200">
+<!-- Y-Axis labels & Grid lines -->
+<div class="absolute inset-x-0 inset-y-0 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
+<div class="border-b border-slate-100 flex items-center justify-between pb-0.5">
+<span class="">60%</span>
+</div>
+<div class="border-b border-slate-100 flex items-center justify-between pb-0.5">
+<span class="">40%</span>
+</div>
+<div class="border-b border-slate-100 flex items-center justify-between pb-0.5">
+<span class="">20%</span>
+</div>
+<div class="flex items-center justify-between pb-0.5">
+<span class="">0%</span>
+</div>
+</div>
+<!-- Column 1: DoS (42.1%) -->
+<div class="relative z-10 flex flex-col items-center flex-1 h-full justify-end group">
+<span class="text-[10px] font-bold text-slate-700 mb-1">42.1%</span>
+<div class="w-10 bg-blue-600 rounded-t-sm transition-all duration-300 group-hover:bg-blue-700" style="height: 70.16%;"></div>
+</div>
+<!-- Column 2: Probe (31.2%) -->
+<div class="relative z-10 flex flex-col items-center flex-1 h-full justify-end group">
+<span class="text-[10px] font-bold text-slate-700 mb-1">31.2%</span>
+<div class="w-10 bg-rose-500 rounded-t-sm transition-all duration-300 group-hover:bg-rose-600" style="height: 52%;"></div>
+</div>
+<!-- Column 3: R2L (17.5%) -->
+<div class="relative z-10 flex flex-col items-center flex-1 h-full justify-end group">
+<span class="text-[10px] font-bold text-slate-700 mb-1">17.5%</span>
+<div class="w-10 bg-indigo-600 rounded-t-sm transition-all duration-300 group-hover:bg-indigo-700" style="height: 29.16%;"></div>
+</div>
+<!-- Column 4: U2R (8.2%) -->
+<div class="relative z-10 flex flex-col items-center flex-1 h-full justify-end group">
+<span class="text-[10px] font-bold text-slate-700 mb-1">8.2%</span>
+<div class="w-10 bg-sky-500 rounded-t-sm transition-all duration-300 group-hover:bg-sky-600" style="height: 13.66%;"></div>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between px-6 pt-2 text-center text-xs font-semibold text-slate-600">
+<span class="flex-1">DoS</span>
+<span class="flex-1">Probe</span>
+<span class="flex-1">R2L</span>
+<span class="flex-1">U2R</span>
+</div>
+</div>
+<!-- Right Card: Key Insights -->
+<div class="lg:col-span-5 bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="key-insights-card">
+<!-- Header with Lightbulb Icon -->
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<h3 class="text-xs font-semibold text-slate-800">Key Insights</h3>
+</div>
+<!-- Bullet Points -->
+<ul class="space-y-4 text-xs text-slate-600 leading-relaxed my-auto pr-2">
+<li class="flex items-start gap-2">
+<span class="text-slate-400 font-bold">•</span>
+<span class="">Normal traffic is <strong class="text-slate-800 font-semibold">81.8%</strong> of the dataset.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-slate-400 font-bold">•</span>
+<span class="">DoS attacks are the most common (<strong class="text-slate-800 font-semibold">43.1%</strong>).</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-slate-400 font-bold">•</span>
+<span class="">TCP is the dominant protocol (<strong class="text-slate-800 font-semibold">53.2%</strong>).</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="text-slate-400 font-bold">•</span>
+<span class="">R2L and U2R attacks are less frequent but important to monitor.</span>
+</li>
+</ul>
+<!-- Subtext note -->
+<div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+<span class="">Updated just now</span>
+<span class="text-blue-600 hover:underline cursor-pointer">Export summary</span>
+</div>
+</div>
+</div>
+<!-- END: Row2-DetailedMetrics -->
+</main>
+</div>
+<!-- END: MainContentArea -->
+</div>
+
+
+</body></html>

@@ -1,0 +1,35 @@
+{
+  "dataset_name": "UNSW-NB15 Benchmark",
+  "total_records": 257673,
+  "train_records": 175341,
+  "test_records": 82332,
+  "traffic_distribution": {
+    "total_normal": 93000,
+    "total_attack": 164673,
+    "normal_percentage": 36.09,
+    "attack_percentage": 63.91,
+    "train_normal": 56000,
+    "train_attack": 119341,
+    "test_normal": 37000,
+    "test_attack": 45332
+  },
+  "attack_categories": {
+    "Normal": 56000,
+    "Generic": 40000,
+    "Exploits": 33393,
+    "Fuzzers": 18184,
+    "DoS": 12264,
+    "Reconnaissance": 10491,
+    "Analysis": 2000,
+    "Backdoor": 1746,
+    "Shellcode": 1133,
+    "Worms": 130
+  },
+  "top_protocols": {
+    "TCP": 79946,
+    "UDP": 63283,
+    "UNAS": 12084,
+    "ARP": 2859,
+    "OSPF": 2595
+  }
+}

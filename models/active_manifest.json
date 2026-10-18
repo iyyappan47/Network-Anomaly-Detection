@@ -1,0 +1,29 @@
+{
+  "active_bundle_id": "bundle_20261016_080301",
+  "bundle_dir": "bundles\\bundle_20261016_080301",
+  "activated_at_utc": "2026-10-16T08:03:02.409392",
+  "manifest_path": "bundles\\bundle_20261016_080301\\manifest.json",
+  "metrics": {
+    "accuracy": 0.9074,
+    "precision": 0.8768,
+    "recall": 0.9679,
+    "f1_score": 0.9201,
+    "roc_auc": 0.9845,
+    "confusion_matrix": {
+      "matrix": [
+        [
+          30834,
+          6166
+        ],
+        [
+          1455,
+          43877
+        ]
+      ],
+      "tn": 30834,
+      "fp": 6166,
+      "fn": 1455,
+      "tp": 43877
+    }
+  }
+}

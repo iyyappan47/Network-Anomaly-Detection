@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Model Performance - Network Anomaly Detection</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sidebar: '#0d233a',
+            sidebarHover: '#173658',
+            brandBlue: '#0066cc',
+            bgSurface: '#f4f7fb',
+            cardBg: '#ffffff',
+            badgeGreen: '#e6f8ee',
+            textGreen: '#1aa260',
+            badgeBlue: '#e9f2fe',
+            badgePurple: '#f3e8ff',
+            textPurple: '#8a2be2',
+            badgeAmber: '#fef3e2',
+            textAmber: '#f59e0b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom CSS for specialized elements -->
+<style data-purpose="custom-styling">
+    .matrix-cell {
+      transition: all 0.2s ease-in-out;
+    }
+    .vertical-axis-text {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="bg-[#f4f7fb] text-slate-800 font-sans min-h-screen flex antialiased">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-[#0d233a] flex flex-col justify-between shrink-0 select-none text-slate-300 min-h-screen" data-purpose="navigation-sidebar">
+<div>
+<!-- Logo Area -->
+<div class="px-5 py-6 flex items-center space-x-3 border-b border-slate-700/50">
+<div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="leading-tight">
+<span class="text-white font-semibold text-sm block tracking-tight">Network Anomaly</span>
+<span class="text-white font-semibold text-sm block tracking-tight">Detection</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="mt-5 px-3 space-y-1">
+<!-- Overview -->
+<a class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#173658] text-slate-300 transition-colors" href="#">
+<svg class="w-5 h-5 mr-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Overview
+        </a>
+<!-- Model Performance (Active) -->
+<a class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium bg-[#0066cc] text-white shadow-sm shadow-blue-900/30" href="#">
+<svg class="w-5 h-5 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Model Performance
+        </a>
+<!-- Detection Results -->
+<a class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#173658] text-slate-300 transition-colors" href="#">
+<svg class="w-5 h-5 mr-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Detection Results
+        </a>
+<!-- Dataset Analysis -->
+<a class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#173658] text-slate-300 transition-colors" href="#">
+<svg class="w-5 h-5 mr-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Dataset Analysis
+        </a>
+<!-- CSV Upload & Prediction -->
+<a class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#173658] text-slate-300 transition-colors" href="#">
+<svg class="w-5 h-5 mr-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          CSV Upload &amp; Prediction
+        </a>
+</nav>
+</div>
+<!-- Sidebar Footer -->
+<div class="px-5 py-4 border-t border-slate-700/50 flex items-center space-x-2.5" data-purpose="sidebar-status">
+<div class="relative flex items-center justify-center">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping absolute opacity-75"></span>
+</div>
+<div>
+<p class="text-xs font-semibold text-slate-200">System Ready</p>
+<p class="text-[10px] text-slate-400">v1.0.0</p>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- BEGIN: TopHeader -->
+<header class="bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-20 h-16" data-purpose="top-navigation-bar">
+<!-- Left side hamburger -->
+<button aria-label="Toggle menu" class="text-slate-500 hover:text-slate-700 focus:outline-none" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Right side controls -->
+<div class="flex items-center space-x-6 text-sm text-slate-600">
+<!-- Date & Time -->
+<div class="flex items-center space-x-2 text-slate-500">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-medium text-xs tracking-tight">Oct 13, 2025</span>
+<span class="text-slate-300">•</span>
+<span class="font-medium text-xs tracking-tight">02:14 PM</span>
+</div>
+<!-- Admin Profile -->
+<div class="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="w-7 h-7 rounded-full bg-slate-800 text-white flex items-center justify-center font-medium text-xs">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+</svg>
+</div>
+<span class="font-medium text-xs text-slate-700">Admin</span>
+<svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: DashboardBody -->
+<main class="space-y-6 flex-1 bg-[#f4f7fb] px-8 py-6" data-purpose="dashboard-main-content">
+<!-- Page Header -->
+<section data-purpose="page-title">
+<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Model Performance</h1>
+<p class="text-xs text-slate-500 mt-1">Evaluation metrics and visualizations of the trained model.</p>
+</section>
+<!-- BEGIN: MetricCardsRow -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" data-purpose="key-metrics-grid">
+<!-- Accuracy Card -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-accuracy">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500">Accuracy</span>
+<div class="text-2xl font-extrabold text-slate-900">0.952</div>
+<div class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600">
+              95.2%
+            </div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Precision Card -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-precision">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500">Precision</span>
+<div class="text-2xl font-extrabold text-slate-900">0.947</div>
+<div class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600">
+              94.7%
+            </div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Recall Card -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-recall">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500">Recall</span>
+<div class="text-2xl font-extrabold text-slate-900">0.958</div>
+<div class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-600">
+              95.8%
+            </div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- F1-score Card -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-f1-score">
+<div class="space-y-1">
+<span class="text-xs font-semibold text-slate-500">F1-score</span>
+<div class="text-2xl font-extrabold text-slate-900">0.952</div>
+<div class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-600">
+              95.2%
+            </div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</section>
+<!-- END: MetricCardsRow -->
+<!-- BEGIN: DetailedChartsAndReportsRow -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-5" data-purpose="performance-visualizations">
+<!-- CARD 1: Confusion Matrix -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="confusion-matrix-card">
+<h2 class="text-sm font-bold text-slate-800">Confusion Matrix</h2>
+<div class="mt-4 flex flex-col items-center justify-center flex-1">
+<div class="flex items-center space-x-2">
+<!-- Vertical 'Actual' Axis Label -->
+<div class="flex items-center justify-center">
+<span class="vertical-axis-text text-xs font-bold text-slate-700 tracking-wider">Actual</span>
+</div>
+<!-- Matrix Row Labels & Grid -->
+<div class="space-y-2">
+<!-- Row 1: Normal -->
+<div class="flex items-center space-x-2">
+<span class="w-14 text-right text-xs font-semibold text-slate-600">Normal</span>
+<!-- True Normal Cell -->
+<div class="w-24 h-16 bg-[#eafaf1] text-[#22c55e] border border-emerald-100/60 rounded-md flex items-center justify-center text-sm font-bold shadow-inner">
+                    65,432
+                  </div>
+<!-- False Attack Cell -->
+<div class="w-24 h-16 bg-[#ffebee] text-[#ef4444] border border-rose-100/60 rounded-md flex items-center justify-center text-sm font-bold shadow-inner">
+                    1,911
+                  </div>
+</div>
+<!-- Row 2: Attack -->
+<div class="flex items-center space-x-2">
+<span class="w-14 text-right text-xs font-semibold text-slate-600">Attack</span>
+<!-- False Normal Cell -->
+<div class="w-24 h-16 bg-[#ffebee] text-[#ef4444] border border-rose-100/60 rounded-md flex items-center justify-center text-sm font-bold shadow-inner">
+                    1,024
+                  </div>
+<!-- True Attack Cell -->
+<div class="w-24 h-16 bg-[#eafaf1] text-[#22c55e] border border-emerald-100/60 rounded-md flex items-center justify-center text-sm font-bold shadow-inner">
+                    13,965
+                  </div>
+</div>
+</div>
+</div>
+<!-- Horizontal 'Predicted' Labels & Axis -->
+<div class="flex pl-16 space-x-2 mt-2">
+<span class="w-24 text-center text-xs font-semibold text-slate-600">Normal</span>
+<span class="w-24 text-center text-xs font-semibold text-slate-600">Attack</span>
+</div>
+<div class="pl-16 text-center mt-2">
+<span class="text-xs font-bold text-slate-700 tracking-wider">Predicted</span>
+</div>
+</div>
+</div>
+<!-- CARD 2: ROC Curve -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="roc-curve-card">
+<h2 class="text-sm font-bold text-slate-800">ROC Curve</h2>
+<div class="mt-2 flex-1 flex flex-col justify-center items-center">
+<div class="relative w-full max-w-[280px] aspect-square flex flex-col items-center">
+<!-- Chart SVG -->
+<svg class="w-full h-full overflow-visible" viewBox="0 0 260 230">
+<!-- Background Grid Lines -->
+<g stroke="#e2e8f0" stroke-dasharray="3,3" stroke-width="0.8">
+<line x1="45" x2="235" y1="25" y2="25"></line>
+<line x1="45" x2="235" y1="60" y2="60"></line>
+<line x1="45" x2="235" y1="95" y2="95"></line>
+<line x1="45" x2="235" y1="130" y2="130"></line>
+<line x1="45" x2="235" y1="165" y2="165"></line>
+<line x1="83" x2="83" y1="25" y2="165"></line>
+<line x1="121" x2="121" y1="25" y2="165"></line>
+<line x1="159" x2="159" y1="25" y2="165"></line>
+<line x1="197" x2="197" y1="25" y2="165"></line>
+</g>
+<!-- Chart Axes -->
+<line stroke="#94a3b8" stroke-width="1.2" x1="45" x2="45" y1="25" y2="165"></line>
+<line stroke="#94a3b8" stroke-width="1.2" x1="45" x2="235" y1="165" y2="165"></line>
+<!-- Y-Axis Ticks & Values (True Positive Rate) -->
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="end" x="38" y="29">1.0</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="end" x="38" y="64">0.8</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="end" x="38" y="99">0.6</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="end" x="38" y="134">0.4</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="end" x="38" y="169">0.0</text>
+<!-- X-Axis Ticks & Values (False Positive Rate) -->
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="middle" x="45" y="180">0.0</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="middle" x="83" y="180">0.2</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="middle" x="121" y="180">0.4</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="middle" x="159" y="180">0.6</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="middle" x="197" y="180">0.8</text>
+<text fill="#64748b" font-size="9" font-weight="500" text-anchor="middle" x="235" y="180">1.0</text>
+<!-- Random Guess Reference Diagonal Line -->
+<line stroke="#cbd5e1" stroke-dasharray="4,4" stroke-width="1.2" x1="45" x2="235" y1="165" y2="25"></line>
+<!-- ROC Curve Line (Climbs steep then saturates near 1.0) -->
+<path d="M 45 165 C 47 40, 56 32, 235 25" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="2"></path>
+<!-- Light Blue Area Under Curve -->
+<path d="M 45 165 C 47 40, 56 32, 235 25 L 235 165 Z" fill="#3b82f6" fill-opacity="0.08"></path>
+<!-- Vertical Axis Title -->
+<text fill="#475569" font-size="9.5" font-weight="600" text-anchor="middle" transform="rotate(-90)" x="-95" y="12">True Positive Rate</text>
+<!-- Horizontal Axis Title -->
+<text fill="#475569" font-size="9.5" font-weight="600" text-anchor="middle" x="140" y="200">False Positive Rate</text>
+</svg>
+<!-- AUC Score Badge Floating Over Chart -->
+<div class="absolute bottom-14 right-4 bg-white/95 border border-slate-200/80 rounded-md px-2.5 py-1 shadow-sm text-center">
+<span class="text-[10px] text-slate-500 font-medium mr-1">AUC =</span>
+<span class="text-xs font-bold text-blue-600">0.98</span>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 3: Classification Report -->
+<div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col" data-purpose="classification-report-card">
+<h2 class="text-sm font-bold text-slate-800 mb-3">Classification Report</h2>
+<div class="overflow-x-auto flex-1 flex flex-col justify-center">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="border-b border-slate-200 text-slate-500 font-semibold text-[11px]">
+<th class="py-2.5 px-2">Class</th>
+<th class="py-2.5 px-2 text-right">Precision</th>
+<th class="py-2.5 px-2 text-right">Recall</th>
+<th class="py-2.5 px-2 text-right">F1-score</th>
+<th class="py-2.5 px-2 text-right">Support</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-slate-700">
+<!-- Normal Row -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-2 font-medium text-slate-800">Normal</td>
+<td class="py-2.5 px-2 text-right">0.966</td>
+<td class="py-2.5 px-2 text-right">0.942</td>
+<td class="py-2.5 px-2 text-right">0.954</td>
+<td class="py-2.5 px-2 text-right font-medium text-slate-600">66,343</td>
+</tr>
+<!-- Attack Row -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-2 font-medium text-slate-800">Attack</td>
+<td class="py-2.5 px-2 text-right">0.928</td>
+<td class="py-2.5 px-2 text-right">0.964</td>
+<td class="py-2.5 px-2 text-right">0.946</td>
+<td class="py-2.5 px-2 text-right font-medium text-slate-600">14,989</td>
+</tr>
+<!-- Accuracy Row -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-2 font-medium text-slate-800">Accuracy</td>
+<td class="py-2.5 px-2 text-right text-slate-300">-</td>
+<td class="py-2.5 px-2 text-right text-slate-300">-</td>
+<td class="py-2.5 px-2 text-right font-semibold text-slate-800">0.952</td>
+<td class="py-2.5 px-2 text-right font-medium text-slate-600">82,332</td>
+</tr>
+<!-- Macro Avg Row -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-2 font-medium text-slate-800">Macro Avg</td>
+<td class="py-2.5 px-2 text-right">0.947</td>
+<td class="py-2.5 px-2 text-right">0.953</td>
+<td class="py-2.5 px-2 text-right">0.950</td>
+<td class="py-2.5 px-2 text-right font-medium text-slate-600">82,332</td>
+</tr>
+<!-- Weighted Avg Row -->
+<tr class="hover:bg-slate-50/70 transition-colors">
+<td class="py-2.5 px-2 font-medium text-slate-800">Weighted Avg</td>
+<td class="py-2.5 px-2 text-right">0.952</td>
+<td class="py-2.5 px-2 text-right">0.952</td>
+<td class="py-2.5 px-2 text-right">0.952</td>
+<td class="py-2.5 px-2 text-right font-medium text-slate-600">82,332</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- END: DetailedChartsAndReportsRow -->
+</main>
+<!-- END: DashboardBody -->
+</div>
+<!-- END: MainContentWrapper -->
+
+
+</body></html>
