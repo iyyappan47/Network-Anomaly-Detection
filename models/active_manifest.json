@@ -1,8 +1,8 @@
 {
   "active_bundle_id": "bundle_20261016_080301",
-  "bundle_dir": "bundles\\bundle_20261016_080301",
+  "bundle_dir": "bundles/bundle_20261016_080301",
   "activated_at_utc": "2026-10-16T08:03:02.409392",
-  "manifest_path": "bundles\\bundle_20261016_080301\\manifest.json",
+  "manifest_path": "bundles/bundle_20261016_080301/manifest.json",
   "metrics": {
     "accuracy": 0.9074,
     "precision": 0.8768,

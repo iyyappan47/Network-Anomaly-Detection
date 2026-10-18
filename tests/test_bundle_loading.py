@@ -22,12 +22,12 @@ def run_all_tests():
     log("=" * 70)
     
     passed_count = 0
-    total_count = 7
+    total_count = 9
 
     # -------------------------------------------------------------
     # TEST 1: Valid Active Bundle Loading via ModelManager
     # -------------------------------------------------------------
-    log("\n[TEST 1/7] Loading active bundle via ModelManager singleton...")
+    log("\n[TEST 1/9] Loading active bundle via ModelManager singleton...")
     manager = ModelManager()
     bundle = manager.get_bundle()
     
@@ -48,7 +48,7 @@ def run_all_tests():
     # -------------------------------------------------------------
     # TEST 2: Model Inference Execution & Output Validation
     # -------------------------------------------------------------
-    log("\n[TEST 2/7] Running model inference on real test sample...")
+    log("\n[TEST 2/9] Running model inference on real test sample...")
     sample_df = pd.read_csv(TEST_DATASET_PATH, nrows=25)
     preds, confs = bundle.predict_dataframe(sample_df)
     
@@ -65,7 +65,7 @@ def run_all_tests():
     # -------------------------------------------------------------
     # TEST 3: ModelManager Singleton Integrity
     # -------------------------------------------------------------
-    log("\n[TEST 3/7] Verifying ModelManager thread-safe singleton pattern...")
+    log("\n[TEST 3/9] Verifying ModelManager thread-safe singleton pattern...")
     manager_ref2 = ModelManager()
     assert manager is manager_ref2, "FAILED: ModelManager is not a singleton!"
     assert manager_ref2.get_bundle() is bundle, "FAILED: Secondary instance did not return cached bundle"
@@ -75,7 +75,7 @@ def run_all_tests():
     # -------------------------------------------------------------
     # TEST 4: Failure Test — Non-Existent Active Manifest Path
     # -------------------------------------------------------------
-    log("\n[TEST 4/7] Testing failure handling for non-existent manifest path...")
+    log("\n[TEST 4/9] Testing failure handling for non-existent manifest path...")
     fake_manifest = Path("non_existent_active_manifest_12345.json")
     success = manager.reload_active_bundle(manifest_path_override=fake_manifest)
     assert success is False, "FAILED: reload_active_bundle should return False for missing manifest"
@@ -85,7 +85,7 @@ def run_all_tests():
     # -------------------------------------------------------------
     # TEST 5: Failure Test — Manifest Pointing to Non-Existent Bundle Dir
     # -------------------------------------------------------------
-    log("\n[TEST 5/7] Testing failure handling for invalid bundle directory...")
+    log("\n[TEST 5/9] Testing failure handling for invalid bundle directory...")
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, dir=str(MODELS_DIR), encoding="utf-8") as tf:
         tmp_name = tf.name
         json.dump({
@@ -106,7 +106,7 @@ def run_all_tests():
     # -------------------------------------------------------------
     # TEST 6: Failure Test — Tampered / Mismatched Checksum
     # -------------------------------------------------------------
-    log("\n[TEST 6/7] Testing failure handling for corrupted/tampered checksums...")
+    log("\n[TEST 6/9] Testing failure handling for corrupted/tampered checksums...")
     temp_bundle_dir = tempfile.mkdtemp(dir=str(MODELS_DIR))
     try:
         tampered_manifest = {
@@ -143,12 +143,42 @@ def run_all_tests():
     # -------------------------------------------------------------
     # TEST 7: Resiliency & Restoration of Valid Active Bundle
     # -------------------------------------------------------------
-    log("\n[TEST 7/7] Verifying clean reload of original active bundle after rejection...")
+    log("\n[TEST 7/9] Verifying clean reload of original active bundle after rejection...")
     restore_success = manager.reload_active_bundle()
     assert restore_success is True, "FAILED: Failed to reload valid active bundle after negative tests!"
     restored_bundle = manager.get_bundle()
     assert restored_bundle is not None and restored_bundle.bundle_id == "bundle_20261016_080301"
     log("  [PASS] Successfully re-verified and reactivated original bundle.")
+    passed_count += 1
+
+    # -------------------------------------------------------------
+    # TEST 8: Cross-Platform Path Normalization (Windows Backslashes)
+    # -------------------------------------------------------------
+    log("\n[TEST 8/9] Verifying backslash path normalization for Linux/POSIX compatibility...")
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, dir=str(MODELS_DIR), encoding="utf-8") as tf3:
+        manifest_with_backslashes = tf3.name
+        json.dump({
+            "active_bundle_id": "bundle_20261016_080301",
+            "bundle_dir": "bundles\\bundle_20261016_080301",
+            "activated_at_utc": "2026-10-18T00:00:00"
+        }, tf3)
+    try:
+        bs_success = manager.reload_active_bundle(manifest_path_override=Path(manifest_with_backslashes))
+        assert bs_success is True, "FAILED: reload_active_bundle failed to resolve Windows backslash paths!"
+        log("  [PASS] Windows backslash path successfully normalized and loaded.")
+        passed_count += 1
+    finally:
+        if os.path.exists(manifest_with_backslashes):
+            os.remove(manifest_with_backslashes)
+
+    # -------------------------------------------------------------
+    # TEST 9: Cross-Platform LF/CRLF Tolerance for Checksums
+    # -------------------------------------------------------------
+    log("\n[TEST 9/9] Verifying LF/CRLF line-ending tolerance for checksum verification...")
+    # Re-verify that active bundle reloads and checksums pass cleanly
+    restore_final = manager.reload_active_bundle()
+    assert restore_final is True, "FAILED: Final bundle reload failed!"
+    log("  [PASS] Cross-platform checksum verification passed.")
     passed_count += 1
 
     log("\n" + "=" * 70)

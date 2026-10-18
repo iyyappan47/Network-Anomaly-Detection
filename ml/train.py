@@ -262,9 +262,9 @@ def train_and_activate_model():
     print("\nPerforming atomic bundle activation...")
     active_data = {
         "active_bundle_id": bundle_name,
-        "bundle_dir": str(bundle_dir.relative_to(BUNDLES_DIR.parent)),
+        "bundle_dir": bundle_dir.relative_to(BUNDLES_DIR.parent).as_posix(),
         "activated_at_utc": datetime.utcnow().isoformat(),
-        "manifest_path": str(manifest_path.relative_to(BUNDLES_DIR.parent)),
+        "manifest_path": manifest_path.relative_to(BUNDLES_DIR.parent).as_posix(),
         "metrics": metrics_summary_for_active(metrics)
     }
 

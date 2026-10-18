@@ -91,13 +91,19 @@ class ModelManager:
                     return False
 
                 # Robust path resolution: handle absolute or relative (MODELS_DIR or BASE_DIR)
-                raw_path = Path(bundle_rel_dir)
+                # Normalize Windows backslashes to forward slashes for Linux/POSIX deployment
+                norm_rel_dir = str(bundle_rel_dir).replace("\\", "/")
+                raw_path = Path(norm_rel_dir)
                 if raw_path.is_absolute():
                     bundle_path = raw_path
                 else:
-                    bundle_path = MODELS_DIR / bundle_rel_dir
+                    bundle_path = MODELS_DIR / raw_path
                     if not bundle_path.exists():
-                        bundle_path = MODELS_DIR.parent / bundle_rel_dir
+                        bundle_path = MODELS_DIR.parent / raw_path
+                    if not bundle_path.exists():
+                        bundle_id = active_meta.get("active_bundle_id", "")
+                        if bundle_id:
+                            bundle_path = MODELS_DIR / "bundles" / bundle_id
 
                 manifest_path = bundle_path / "manifest.json"
                 if not manifest_path.exists():
@@ -105,15 +111,24 @@ class ModelManager:
 
                 manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
                 
-                # Verify checksums
+                # Verify checksums (with cross-platform CRLF/LF line-ending tolerance for JSON files)
                 checksums = manifest.get("checksums", {})
                 for fname, expected_hash in checksums.items():
                     fpath = bundle_path / fname
                     if not fpath.exists():
                         print(f"[ERROR] Missing artifact {fname} in {bundle_path.name}")
                         return False
-                    h = hashlib.sha256(fpath.read_bytes()).hexdigest()
+                    raw_bytes = fpath.read_bytes()
+                    h = hashlib.sha256(raw_bytes).hexdigest()
                     if h != expected_hash:
+                        # For text/JSON metadata files, tolerate CRLF vs LF line ending variation across OS/git checkouts
+                        if fname.endswith(".json"):
+                            norm_lf = raw_bytes.replace(b"\r\n", b"\n")
+                            if hashlib.sha256(norm_lf).hexdigest() == expected_hash:
+                                continue
+                            norm_crlf = norm_lf.replace(b"\n", b"\r\n")
+                            if hashlib.sha256(norm_crlf).hexdigest() == expected_hash:
+                                continue
                         print(f"[ERROR] Checksum mismatch for {fname}")
                         return False
 
