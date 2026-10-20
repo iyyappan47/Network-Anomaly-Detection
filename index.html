@@ -48,7 +48,7 @@
           <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
-          <span>Overview</span>
+          <span>System Overview</span>
         </a>
 
         <!-- 2. Model Performance -->
@@ -59,20 +59,20 @@
           <span>Model Performance</span>
         </a>
 
-        <!-- 3. Data Analysis -->
+        <!-- 3. Dataset Analysis -->
         <a id="nav-dataset-analysis" href="#/dataset-analysis" class="nav-item flex items-center space-x-3 px-3.5 py-2.5 rounded-lg font-medium text-sm transition-colors text-slate-300 hover:text-white hover:bg-[#153350]">
           <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
-          <span>Data Analysis</span>
+          <span>Dataset Analysis</span>
         </a>
 
-        <!-- 4. CSV Upload & Prediction -->
+        <!-- 4. CSV Upload & Batch Inference -->
         <a id="nav-csv-upload-prediction" href="#/csv-upload-prediction" class="nav-item flex items-center space-x-3 px-3.5 py-2.5 rounded-lg font-medium text-sm transition-colors text-slate-300 hover:text-white hover:bg-[#153350]">
           <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
           </svg>
-          <span>CSV Upload &amp; Prediction</span>
+          <span>CSV Upload &amp; Batch Inference</span>
         </a>
 
         <!-- 5. Detection Results -->
@@ -159,8 +159,8 @@
       <section id="screen-overview" class="screen-view px-8 py-6 space-y-6 max-w-[1440px] w-full mx-auto" data-purpose="dashboard-overview">
         <!-- PageHeading -->
         <div>
-          <h1 class="text-2xl font-bold tracking-tight text-slate-900">Overview</h1>
-          <p class="text-xs text-slate-500 mt-1">Project summary, dataset statistics, model status and workflow at a glance.</p>
+          <h1 class="text-2xl font-bold tracking-tight text-slate-900">System Overview</h1>
+          <p class="text-xs text-slate-500 mt-1">This tool analyzes network traffic data and identifies patterns that may be suspicious.</p>
         </div>
 
         <!-- MetricCardsRow -->
@@ -236,7 +236,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5" data-purpose="charts-and-workflow-row">
           <!-- Left Card: Dataset Distribution Donut Chart -->
           <div class="lg:col-span-5 bg-white rounded-xl border border-card-border p-6 shadow-xs flex flex-col justify-between">
-            <h2 class="text-sm font-semibold text-slate-800">Dataset Distribution</h2>
+            <div>
+              <h2 class="text-sm font-semibold text-slate-800">Dataset Distribution</h2>
+              <p class="text-[11px] text-slate-400 mt-0.5">The numbers shown here are based on the benchmark dataset. They do not represent live network activity.</p>
+            </div>
             <div class="py-6 flex flex-col sm:flex-row items-center justify-center gap-8">
               <!-- Donut Visual (81.8% green, 18.2% red) -->
               <div class="relative w-44 h-44 shrink-0 flex items-center justify-center">
@@ -353,17 +356,21 @@
           </div>
         </div>
 
-        <!-- BottomInfoBanner -->
+        <!-- BottomInfoBanner / Ready to Analyze? -->
         <div data-purpose="notification-callout">
-          <div class="bg-blue-50/70 border border-blue-100 rounded-xl px-4 py-3.5 flex items-center space-x-3 text-xs text-blue-800">
-            <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" x2="12" y1="16" y2="12"></line>
-              <line x1="12" x2="12.01" y1="8" y2="8"></line>
-            </svg>
-            <p class="font-normal">
-              The model is ready for prediction. You can now <a class="underline font-medium hover:text-blue-900 transition" href="#/csv-upload-prediction">upload a CSV file</a> to test new data.
-            </p>
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl px-4 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-blue-800">
+            <div class="flex items-center space-x-3">
+              <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" x2="12" y1="16" y2="12"></line>
+                <line x1="12" x2="12.01" y1="8" y2="8"></line>
+              </svg>
+              <div>
+                <span class="font-semibold block sm:inline">Ready to Analyze?</span>
+                <span class="font-normal sm:ml-1">Upload a supported CSV file to analyze network traffic and view the results.</span>
+              </div>
+            </div>
+            <a class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition text-xs shrink-0 text-center shadow-xs" href="#/csv-upload-prediction">Upload CSV File</a>
           </div>
         </div>
       </section>
@@ -381,66 +388,90 @@
         <!-- MetricCardsRow -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" data-purpose="key-metrics-grid">
           <!-- Accuracy Card -->
-          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-accuracy">
-            <div class="space-y-1">
-              <span class="text-xs font-semibold text-slate-500">Accuracy</span>
-              <div id="perf-acc-val" class="text-2xl font-extrabold text-slate-900">0.952</div>
-              <div id="perf-acc-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600">
-                95.2%
+          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="metric-accuracy">
+            <div class="flex items-start justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500">Accuracy</span>
+                <div id="perf-acc-val" class="text-2xl font-extrabold text-slate-900">0.952</div>
+                <div id="perf-acc-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600">
+                  95.2%
+                </div>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
               </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-              </svg>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-xs">
+              <span class="font-semibold text-slate-700 block text-[11px]">How Often Is the Model Correct?</span>
+              <p class="text-slate-500 text-[10.5px] mt-0.5 leading-snug">Out of all the records checked, how many did the model classify correctly?</p>
             </div>
           </div>
 
           <!-- Precision Card -->
-          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-precision">
-            <div class="space-y-1">
-              <span class="text-xs font-semibold text-slate-500">Precision</span>
-              <div id="perf-prec-val" class="text-2xl font-extrabold text-slate-900">0.947</div>
-              <div id="perf-prec-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600">
-                94.7%
+          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="metric-precision">
+            <div class="flex items-start justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500">Precision</span>
+                <div id="perf-prec-val" class="text-2xl font-extrabold text-slate-900">0.947</div>
+                <div id="perf-prec-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600">
+                  94.7%
+                </div>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
               </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-              </svg>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-xs">
+              <span class="font-semibold text-slate-700 block text-[11px]">How Trustworthy Are the Attack Alerts?</span>
+              <p class="text-slate-500 text-[10.5px] mt-0.5 leading-snug">Of the records marked as attacks, how many were actually attacks in the evaluation data?</p>
             </div>
           </div>
 
           <!-- Recall Card -->
-          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-recall">
-            <div class="space-y-1">
-              <span class="text-xs font-semibold text-slate-500">Recall</span>
-              <div id="perf-rec-val" class="text-2xl font-extrabold text-slate-900">0.958</div>
-              <div id="perf-rec-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-600">
-                95.8%
+          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="metric-recall">
+            <div class="flex items-start justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500">Recall</span>
+                <div id="perf-rec-val" class="text-2xl font-extrabold text-slate-900">0.958</div>
+                <div id="perf-rec-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-600">
+                  95.8%
+                </div>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
               </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-              </svg>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-xs">
+              <span class="font-semibold text-slate-700 block text-[11px]">How Many Attacks Did the Model Find?</span>
+              <p class="text-slate-500 text-[10.5px] mt-0.5 leading-snug">Out of all the actual attack records, how many did the model identify correctly?</p>
             </div>
           </div>
 
           <!-- F1-score Card -->
-          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between" data-purpose="metric-f1-score">
-            <div class="space-y-1">
-              <span class="text-xs font-semibold text-slate-500">F1-score</span>
-              <div id="perf-f1-val" class="text-2xl font-extrabold text-slate-900">0.952</div>
-              <div id="perf-f1-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-600">
-                95.2%
+          <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="metric-f1-score">
+            <div class="flex items-start justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-semibold text-slate-500">F1-score</span>
+                <div id="perf-f1-val" class="text-2xl font-extrabold text-slate-900">0.952</div>
+                <div id="perf-f1-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-600">
+                  95.2%
+                </div>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
               </div>
             </div>
-            <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-              </svg>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-xs">
+              <span class="font-semibold text-slate-700 block text-[11px]">How Well Do Precision and Recall Work Together?</span>
+              <p class="text-slate-500 text-[10.5px] mt-0.5 leading-snug">A combined score that helps show whether the model balances finding attacks with avoiding false alarms.</p>
             </div>
           </div>
         </div>
@@ -492,12 +523,35 @@
               <div class="pl-16 text-center mt-2">
                 <span class="text-xs font-bold text-slate-700 tracking-wider">Predicted</span>
               </div>
+
+              <!-- Simple English Outcome Explanations -->
+              <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-[10.5px] text-slate-600 w-full">
+                <div class="bg-emerald-50/60 p-2 rounded border border-emerald-100">
+                  <span class="font-bold text-emerald-800 block">Correct Normal</span>
+                  <span class="text-slate-500">Normal traffic correctly identified.</span>
+                </div>
+                <div class="bg-rose-50/60 p-2 rounded border border-rose-100">
+                  <span class="font-bold text-rose-800 block">False Alarm</span>
+                  <span class="text-slate-500">Normal traffic incorrectly flagged as Attack.</span>
+                </div>
+                <div class="bg-rose-50/60 p-2 rounded border border-rose-100">
+                  <span class="font-bold text-rose-800 block">Missed Attack</span>
+                  <span class="text-slate-500">Attack traffic incorrectly classified as Normal.</span>
+                </div>
+                <div class="bg-emerald-50/60 p-2 rounded border border-emerald-100">
+                  <span class="font-bold text-emerald-800 block">Attack Detected</span>
+                  <span class="text-slate-500">Attack traffic correctly identified.</span>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- CARD 2: ROC Curve -->
           <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="roc-curve-card">
-            <h2 class="text-sm font-bold text-slate-800">ROC Curve</h2>
+            <div>
+              <h2 class="text-sm font-bold text-slate-800">ROC-AUC — How Well Can the Model Tell the Two Types Apart?</h2>
+              <p class="text-[11px] text-slate-500 mt-0.5">Shows how well the model separates Normal traffic from Attack traffic.</p>
+            </div>
             <div class="mt-2 flex-1 flex flex-col justify-center items-center">
               <div class="relative w-full max-w-[280px] aspect-square flex flex-col items-center">
                 <!-- Chart SVG -->
@@ -689,40 +743,40 @@
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 5h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
                 </div>
               </div>
-              <!-- Card 2: Predicted Normal -->
+              <!-- Card 2: Looks Normal -->
               <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between">
                 <div class="space-y-1">
                   <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-emerald-800">Predicted Normal</span>
+                    <span class="text-xs font-semibold text-emerald-800">Looks Normal</span>
                     <span id="dr-sum-normal-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600">0.0%</span>
                   </div>
                   <div id="dr-sum-normal" class="text-2xl font-extrabold text-emerald-700">0</div>
-                  <span class="text-[11px] text-emerald-600/80 block">Benign network flows</span>
+                  <span class="text-[11px] text-emerald-600/80 block">No suspicious pattern was identified.</span>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
                 </div>
               </div>
-              <!-- Card 3: Predicted Attack -->
+              <!-- Card 3: Potentially Suspicious -->
               <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between">
                 <div class="space-y-1">
                   <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-rose-800">Predicted Attack</span>
+                    <span class="text-xs font-semibold text-rose-800">Potentially Suspicious</span>
                     <span id="dr-sum-attack-pct" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-600">0.0%</span>
                   </div>
                   <div id="dr-sum-attack" class="text-2xl font-extrabold text-rose-700">0</div>
-                  <span class="text-[11px] text-rose-600/80 block">Anomalous flows</span>
+                  <span class="text-[11px] text-rose-600/80 block">This traffic was flagged for review.</span>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600">
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
                 </div>
               </div>
-              <!-- Card 4: Attack Percentage -->
+              <!-- Card 4: Suspicious Percentage -->
               <div class="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex items-center justify-between">
                 <div class="space-y-1">
-                  <span class="text-xs font-semibold text-slate-500">Attack Percentage</span>
+                  <span class="text-xs font-semibold text-slate-500">Suspicious Percentage</span>
                   <div id="dr-sum-attack-rate" class="text-2xl font-extrabold text-slate-900">0.0%</div>
-                  <span class="text-[11px] text-slate-400 block">Anomaly ratio in sample</span>
+                  <span class="text-[11px] text-slate-400 block">Proportion flagged for review</span>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500">
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -860,6 +914,26 @@
                   <div class="pl-16 text-center mt-1">
                     <span class="text-xs font-bold text-slate-700 tracking-wider">Predicted</span>
                   </div>
+
+                  <!-- Simple English Outcome Explanations -->
+                  <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-[10.5px] text-slate-600 w-full">
+                    <div class="bg-emerald-50/60 p-2 rounded border border-emerald-100">
+                      <span class="font-bold text-emerald-800 block">Correct Normal</span>
+                      <span class="text-slate-500">Normal traffic correctly identified.</span>
+                    </div>
+                    <div class="bg-rose-50/60 p-2 rounded border border-rose-100">
+                      <span class="font-bold text-rose-800 block">False Alarm</span>
+                      <span class="text-slate-500">Normal traffic incorrectly flagged as Attack.</span>
+                    </div>
+                    <div class="bg-rose-50/60 p-2 rounded border border-rose-100">
+                      <span class="font-bold text-rose-800 block">Missed Attack</span>
+                      <span class="text-slate-500">Attack traffic incorrectly classified as Normal.</span>
+                    </div>
+                    <div class="bg-emerald-50/60 p-2 rounded border border-emerald-100">
+                      <span class="font-bold text-emerald-800 block">Attack Detected</span>
+                      <span class="text-slate-500">Attack traffic correctly identified.</span>
+                    </div>
+                  </div>
                 </div>
                 <!-- Unlabeled Matrix Notice -->
                 <div id="dr-cm-unlabeled-notice" class="hidden my-auto py-6 px-4 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 text-center">
@@ -966,15 +1040,15 @@
           <!-- 4. DETAILED PREDICTION TABLE & CSV DOWNLOAD              -->
           <!-- ======================================================== -->
           <div data-purpose="detailed-predictions-section">
-            <div class="flex items-center justify-between mb-2.5">
+            <div class="flex items-center justify-between h-7 mb-2.5">
               <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">4. Detailed Prediction Results &amp; CSV Download</h2>
               <span class="text-[11px] text-slate-400">Per-flow telemetry with ground-truth alignment</span>
             </div>
 
             <!-- Split View Layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
               <!-- Left Panel: Filter Bar and Table (col-span-7 on lg, col-span-8 on xl) -->
-              <div class="lg:col-span-7 xl:col-span-8 bg-white border border-slate-200/90 rounded-xl shadow-sm p-4 flex flex-col space-y-3" data-purpose="table-container">
+              <div class="lg:col-span-7 xl:col-span-8 bg-white border border-slate-200/90 rounded-xl shadow-sm p-4 flex flex-col space-y-4" data-purpose="table-container">
                 <!-- Filter Controls & Export Action Bar -->
                 <div class="flex flex-wrap items-center gap-2.5">
                   <!-- Search Input -->
@@ -1009,8 +1083,8 @@
                   <div class="relative">
                     <select id="detection-status-filter" class="appearance-none bg-white border border-slate-200 text-slate-700 text-xs py-1.5 pl-3 pr-7 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500" onchange="filterDetectionTable()">
                       <option value="ALL">All Predictions</option>
-                      <option value="Normal">Normal</option>
-                      <option value="Attack">Attack</option>
+                      <option value="Normal">Looks Normal</option>
+                      <option value="Attack">Potentially Suspicious</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-slate-400">
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -1036,19 +1110,19 @@
                 </div>
 
                 <!-- Prediction Records Table -->
-                <div class="overflow-x-auto rounded-lg border border-slate-100">
-                  <table class="min-w-full divide-y divide-slate-100 text-left text-xs" id="detection-table">
+                <div class="flex-1 flex flex-col overflow-x-auto rounded-lg border border-slate-100">
+                  <table class="min-w-full h-full divide-y divide-slate-100 text-left text-xs" id="detection-table">
                     <thead class="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
                       <tr>
-                        <th class="py-2.5 px-3 w-8" scope="col">#</th>
-                        <th class="py-2.5 px-3" scope="col">Source IP</th>
-                        <th class="py-2.5 px-3" scope="col">Destination IP</th>
-                        <th class="py-2.5 px-2" scope="col">Proto</th>
-                        <th class="py-2.5 px-3" scope="col">Prediction</th>
-                        <th class="py-2.5 px-3" scope="col">Probability</th>
-                        <th class="py-2.5 px-3" scope="col">Actual Label</th>
-                        <th class="py-2.5 px-3" scope="col">Status</th>
-                        <th class="py-2.5 px-3 text-right" scope="col">Details</th>
+                        <th class="py-3 px-3 w-11 text-center" scope="col">#</th>
+                        <th class="py-3 px-3 min-w-[110px] text-left" scope="col">Source IP</th>
+                        <th class="py-3 px-3 min-w-[110px] text-left" scope="col">Destination IP</th>
+                        <th class="py-3 px-3 w-16 text-center" scope="col">Proto</th>
+                        <th class="py-3 px-3 min-w-[155px] text-left" scope="col">Prediction</th>
+                        <th class="py-3 px-3 min-w-[95px] text-center" scope="col">Probability</th>
+                        <th class="py-3 px-3 min-w-[105px] text-center" scope="col">Actual Label</th>
+                        <th class="py-3 px-3 min-w-[100px] text-center" scope="col">Status</th>
+                        <th class="py-3 px-3 w-16 text-center" scope="col">Details</th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white font-medium text-slate-700" id="detection-table-body">
@@ -1075,8 +1149,8 @@
               </div>
 
               <!-- Right Panel: Record Details (col-span-5 on lg, col-span-4 on xl) -->
-              <div class="lg:col-span-5 xl:col-span-4 bg-white border border-slate-200/90 rounded-xl shadow-sm p-4" data-purpose="details-panel">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div class="lg:col-span-5 xl:col-span-4 bg-white border border-slate-200/90 rounded-xl shadow-sm p-4 flex flex-col justify-between" data-purpose="details-panel">
+                <div class="flex items-center justify-between h-7 border-b border-slate-100 mb-2.5">
                   <h3 class="text-sm font-bold text-slate-800">Record Inspection</h3>
                   <span id="detail-row-id-badge" class="font-mono text-xs text-slate-400">Row #1</span>
                 </div>
@@ -1148,6 +1222,25 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Understanding This Result Guidance Card -->
+                <div class="mt-4 pt-3 border-t border-slate-100" id="detail-guidance-card">
+                  <h4 class="text-xs font-semibold text-slate-700 mb-2">Understanding This Result</h4>
+                  <div class="bg-slate-50 rounded-lg p-3 border border-slate-100 space-y-2 text-xs">
+                    <div>
+                      <span class="font-semibold text-slate-700 block text-[11px]">Why was this flagged?</span>
+                      <p id="detail-guidance-why" class="text-slate-600 text-[10.5px] mt-0.5 leading-snug">The system compares connection size, speed, and patterns against typical network behavior.</p>
+                    </div>
+                    <div>
+                      <span class="font-semibold text-slate-700 block text-[11px]">What does this mean?</span>
+                      <p id="detail-guidance-meaning" class="text-slate-600 text-[10.5px] mt-0.5 leading-snug">Automated alerts point out unusual patterns, but they are not proof of a real cyberattack.</p>
+                    </div>
+                    <div>
+                      <span class="font-semibold text-slate-700 block text-[11px]">What should you do?</span>
+                      <p id="detail-guidance-action" class="text-slate-600 text-[10.5px] mt-0.5 leading-snug">Check if this connection is part of regular work, or ask your IT team to take a quick look.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1156,20 +1249,23 @@
       </section>
 
       <!-- ======================================================== -->
-      <!-- SCREEN 4: DATASET ANALYSIS                               -->
+      <!-- SCREEN 3: DATASET ANALYSIS                               -->
       <!-- ======================================================== -->
       <section id="screen-dataset-analysis" class="screen-view px-8 py-6 space-y-6 max-w-[1440px] w-full mx-auto hidden" data-purpose="dataset-analysis-content">
         <!-- Header Titles -->
         <div data-purpose="page-heading">
           <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Dataset Analysis</h1>
-          <p class="text-xs text-slate-500 mt-1">Visual insights into the dataset distribution and attack types.</p>
+          <p class="text-xs text-slate-500 mt-1">These charts show the network traffic records included in the dataset.</p>
         </div>
 
         <!-- Row 1: Analytical Cards -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-purpose="row-1-charts">
-          <!-- Card 1: Traffic Distribution -->
+          <!-- Card 1: Normal vs Attack Records -->
           <div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="traffic-distribution-card">
-            <h3 class="text-xs font-semibold text-slate-800 mb-4">Traffic Distribution</h3>
+            <div>
+              <h3 class="text-xs font-semibold text-slate-800">Normal vs Attack Records</h3>
+              <p class="text-[11px] text-slate-500 mt-0.5 mb-3">Shows how many records are labeled Normal and how many are labeled Attack.</p>
+            </div>
             <div class="flex items-center justify-around my-auto">
               <!-- Inline Donut Chart (Traffic) -->
               <div class="relative w-44 h-44 flex items-center justify-center">
@@ -1211,7 +1307,10 @@
 
           <!-- Card 2: Attack Categories -->
           <div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="attack-categories-card">
-            <h3 class="text-xs font-semibold text-slate-800 mb-3">Attack Categories</h3>
+            <div>
+              <h3 class="text-xs font-semibold text-slate-800">Attack Categories</h3>
+              <p class="text-[11px] text-slate-500 mt-0.5 mb-2">Shows the different types of attacks represented in the dataset.</p>
+            </div>
             <!-- Horizontal Bars -->
             <div id="da-attack-cats-container" class="space-y-3.5 my-auto">
               <!-- DoS -->
@@ -1266,7 +1365,10 @@
 
           <!-- Card 3: Protocol Distribution -->
           <div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-xs flex flex-col justify-between" data-purpose="protocol-distribution-card">
-            <h3 class="text-xs font-semibold text-slate-800 mb-4">Protocol Distribution</h3>
+            <div>
+              <h3 class="text-xs font-semibold text-slate-800">Protocol Distribution</h3>
+              <p class="text-[11px] text-slate-500 mt-0.5 mb-3">Shows the types of network communication used in the records, such as TCP, UDP, and ICMP.</p>
+            </div>
             <div class="flex items-center justify-around my-auto">
               <!-- Inline Donut Chart (Protocols) -->
               <div class="relative w-40 h-40 flex items-center justify-center">
@@ -1405,13 +1507,13 @@
       </section>
 
       <!-- ======================================================== -->
-      <!-- SCREEN 5: CSV UPLOAD & PREDICTION                        -->
+      <!-- SCREEN 4: CSV UPLOAD & BATCH INFERENCE                -->
       <!-- ======================================================== -->
-            <section id="screen-csv-upload-prediction" class="screen-view max-w-[1440px] px-8 py-6 space-y-6 w-full mx-auto hidden" data-purpose="csv-upload-content">
+      <section id="screen-csv-upload-prediction" class="screen-view max-w-[1440px] px-8 py-6 space-y-6 w-full mx-auto hidden" data-purpose="csv-upload-content">
         <!-- PageHeader -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4" data-purpose="page-title-section">
           <div>
-            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">CSV Upload &amp; Prediction</h1>
+            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">CSV Upload &amp; Batch Inference</h1>
             <p class="text-xs text-slate-500 mt-1">Upload network traffic CSV telemetry or load benchmark test samples for ML-based anomaly detection.</p>
           </div>
           <div class="flex items-center gap-2">
@@ -1584,8 +1686,8 @@
                   </svg>
                 </div>
                 <!-- Headline & Instructions -->
-                <p class="text-xs font-bold text-slate-800 mb-1">Drop your CSV file here</p>
-                <p class="text-[11px] text-slate-500 max-w-xs mb-2">Drag a sample card from above or choose a CSV file from your computer.</p>
+                <p class="text-xs font-bold text-slate-800 mb-1">Upload Your File</p>
+                <p class="text-[11px] text-slate-500 max-w-xs mb-2">Upload a supported CSV file containing network traffic records.</p>
                 <!-- Badge -->
                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200 mb-2.5">
                   CSV files only
@@ -1656,12 +1758,17 @@
                     Trigger the preprocessing pipeline to encode categorical variables, scale numerical features, and evaluate through the trained model.
                   </p>
                 </div>
-                <!-- Start Action Button -->
-                <div class="mt-4">
+                <!-- Start Action Button & Completion Actions -->
+                <div class="mt-4 space-y-2">
                   <button id="start-preprocess-btn" class="w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm transition flex items-center justify-center gap-1.5" type="button" onclick="handlePreprocessClick()">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                    <span>Start Preprocessing</span>
+                    <span>Analyze Network Traffic</span>
                   </button>
+                  <button id="analyze-another-btn" class="w-full py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium border border-slate-200 transition hidden flex items-center justify-center gap-1.5" type="button" onclick="resetUploadedFile()">
+                    <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                    <span>Analyze Another File</span>
+                  </button>
+                  <p id="preprocess-btn-note" class="text-[10.5px] text-slate-500 text-center">Select this button to analyze the uploaded records.</p>
                 </div>
               </div>
             </div>
@@ -1669,13 +1776,14 @@
             <!-- Card 3: Validation Results & Schema Checklist -->
             <div class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-4 flex flex-col justify-between flex-1" data-purpose="validation-results-card">
               <div>
-                <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center justify-between mb-1.5">
                   <h2 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                    Schema &amp; Data Validation Checklist
+                    Check Your File
                   </h2>
                   <span class="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-medium">UNSW-NB15 Standard</span>
                 </div>
+                <p class="text-[11px] text-slate-500 mb-2.5">Make sure your file contains the required information before analysis.</p>
                 <!-- Validation Checklist Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div class="flex items-center space-x-2 text-slate-700 bg-slate-50/70 p-2 rounded-lg border border-slate-100">
@@ -1717,14 +1825,15 @@
 
         <!-- CSV STAGING PREVIEW & SCHEMA PRE-CHECK CARD (Hidden by default, shown upon staging a file) -->
         <div id="csv-staging-card" class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-4 hidden" data-purpose="csv-staging-preview">
+          <!-- File Verification Summary Header -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
             <div>
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">CSV Staging &amp; Quick Preview</h3>
-                <span class="text-[10px] text-slate-400 font-mono">(Client-Side Pre-Check • Max 256 KB Scan)</span>
+                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">File Verification Summary</h3>
+                <span class="text-[10px] text-slate-400 font-mono">(Ready for Analysis)</span>
               </div>
-              <p class="text-[11px] text-slate-500 mt-0.5">Pre-verified model feature columns and up to first 5 complete raw telemetry records prior to preprocessing.</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">File structure and required network telemetry features verified prior to analysis.</p>
             </div>
             <!-- Status Badges -->
             <div class="flex flex-wrap items-center gap-1.5">
@@ -1743,18 +1852,29 @@
           <!-- Error / Info Notice Container -->
           <div id="csv-preview-notice" class="hidden mt-3 p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-700"></div>
 
-          <!-- Preview Table Container -->
-          <div id="csv-preview-table-container" class="mt-3 overflow-x-auto border border-slate-200 rounded-lg">
-            <table class="w-full text-left border-collapse text-xs">
-              <thead id="csv-preview-table-head" class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200 text-[11px]">
-              </thead>
-              <tbody id="csv-preview-table-body" class="divide-y divide-slate-100 text-slate-600 font-mono text-[11px]">
-              </tbody>
-            </table>
-          </div>
-          <div class="mt-2.5 flex items-center justify-between text-[10.5px] text-slate-400">
-            <span id="csv-preview-footer-note">Showing up to 5 complete raw telemetry records. Server-side validation and model inference execute during preprocessing.</span>
-          </div>
+          <!-- Collapsible Raw Technical Data Preview (Collapsed by default) -->
+          <details id="csv-preview-accordion" class="group mt-3 border border-slate-200/80 rounded-lg overflow-hidden">
+            <summary class="cursor-pointer select-none py-2 px-3 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 flex items-center justify-between transition">
+              <div class="flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-slate-500 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                <span>View Raw Column Preview (42 Features)</span>
+              </div>
+              <span class="text-[10.5px] text-slate-400 font-normal">Optional technical inspection</span>
+            </summary>
+            <div class="p-3 bg-white border-t border-slate-200/80 space-y-2">
+              <div id="csv-preview-table-container" class="overflow-x-auto border border-slate-200 rounded-lg">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead id="csv-preview-table-head" class="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200 text-[11px]">
+                  </thead>
+                  <tbody id="csv-preview-table-body" class="divide-y divide-slate-100 text-slate-600 font-mono text-[11px]">
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex items-center justify-between text-[10.5px] text-slate-400">
+                <span id="csv-preview-footer-note">Showing up to 5 complete raw telemetry records. Server-side validation and model inference execute during preprocessing.</span>
+              </div>
+            </div>
+          </details>
         </div>
 
         <!-- Dedicated Prediction Session Summary Card (Shown upon successful prediction) -->
@@ -1763,18 +1883,18 @@
             <div>
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                <h3 class="text-sm font-bold text-slate-900">Prediction Session Summary</h3>
+                <h3 class="text-sm font-bold text-slate-900">Analysis Summary</h3>
                 <span class="text-[11px] text-slate-400 font-mono">(Active Session Results)</span>
               </div>
-              <p class="text-xs text-slate-500 mt-0.5">Aggregated predictions calculated across all processed telemetry records in this upload.</p>
+              <p class="text-xs text-slate-500 mt-0.5">Aggregated results across all processed records in this upload.</p>
             </div>
             <div class="flex items-center gap-2">
-              <button type="button" onclick="exportCurrentSession(false)" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-xs transition flex items-center gap-1.5">
+              <button type="button" onclick="exportCurrentSession(false)" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-xs transition flex items-center gap-1.5" title="Download the analysis results if you need to save or review them later.">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                <span>Download Full Results CSV</span>
+                <span>Download Results</span>
               </button>
-              <a href="#/detection-results" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium border border-slate-200 transition flex items-center gap-1">
-                <span>View in Detection Results</span>
+              <a href="#/detection-results" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium border border-slate-200 transition flex items-center gap-1" title="Review the records marked as Normal or Potentially Suspicious.">
+                <span>View Your Results</span>
                 <span class="text-xs">&rarr;</span>
               </a>
             </div>
@@ -1786,27 +1906,27 @@
             <div class="bg-slate-50/80 rounded-xl p-4 border border-slate-200/80">
               <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Records</span>
               <div id="sum-total-rows" class="text-2xl font-bold text-slate-900 mt-1">0</div>
-              <span class="text-[11px] text-slate-400 mt-0.5 block">100% telemetry rows processed</span>
+              <span class="text-[11px] text-slate-400 mt-0.5 block">Total records processed</span>
             </div>
 
             <!-- Normal Traffic Count & Pct -->
             <div class="bg-emerald-50/40 rounded-xl p-4 border border-emerald-100">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-emerald-800 uppercase tracking-wider">Normal Traffic</span>
+                <span class="text-[11px] font-semibold text-emerald-800 uppercase tracking-wider">Looks Normal</span>
                 <span id="sum-normal-pct" class="text-xs font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">0.0%</span>
               </div>
               <div id="sum-normal-count" class="text-2xl font-bold text-emerald-700 mt-1">0</div>
-              <span class="text-[11px] text-emerald-600/90 mt-0.5 block">Benign network flows</span>
+              <span class="text-[11px] text-emerald-600/90 mt-0.5 block">No suspicious pattern was identified</span>
             </div>
 
             <!-- Attack Anomalies Count & Pct -->
             <div class="bg-rose-50/40 rounded-xl p-4 border border-rose-100">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-rose-800 uppercase tracking-wider">Detected Attacks</span>
+                <span class="text-[11px] font-semibold text-rose-800 uppercase tracking-wider">Potentially Suspicious</span>
                 <span id="sum-attack-pct" class="text-xs font-bold text-rose-700 bg-rose-100/80 px-2 py-0.5 rounded-full">0.0%</span>
               </div>
               <div id="sum-attack-count" class="text-2xl font-bold text-rose-700 mt-1">0</div>
-              <span class="text-[11px] text-rose-600/90 mt-0.5 block">Anomalous traffic flows</span>
+              <span class="text-[11px] text-rose-600/90 mt-0.5 block">This traffic was flagged for review</span>
             </div>
           </div>
 
@@ -1987,8 +2107,8 @@
     // Route configurations
     const routes = {
       'overview': {
-        title: 'Overview',
-        pageTitle: 'Network Anomaly Detection - Overview Dashboard',
+        title: 'System Overview',
+        pageTitle: 'Network Anomaly Detection - System Overview',
         navId: 'nav-overview',
         screenId: 'screen-overview'
       },
@@ -1999,14 +2119,14 @@
         screenId: 'screen-model-performance'
       },
       'dataset-analysis': {
-        title: 'Data Analysis',
-        pageTitle: 'Network Anomaly Detection - Data Analysis',
+        title: 'Dataset Analysis',
+        pageTitle: 'Network Anomaly Detection - Dataset Analysis',
         navId: 'nav-dataset-analysis',
         screenId: 'screen-dataset-analysis'
       },
       'csv-upload-prediction': {
-        title: 'CSV Upload & Prediction',
-        pageTitle: 'Network Anomaly Detection - CSV Upload & Prediction',
+        title: 'CSV Upload & Batch Inference',
+        pageTitle: 'Network Anomaly Detection - CSV Upload & Batch Inference',
         navId: 'nav-csv-upload-prediction',
         screenId: 'screen-csv-upload-prediction'
       },
@@ -2640,28 +2760,30 @@
             const badgeClass = isAttack 
               ? 'bg-rose-50 text-rose-600 border-rose-200/60' 
               : 'bg-emerald-50 text-emerald-600 border-emerald-200/60';
+            const badgeText = isAttack ? 'Potentially Suspicious' : 'Looks Normal';
+            const badgeTitle = isAttack ? 'This traffic was flagged for review' : 'No suspicious pattern was identified';
             const activeClass = i === 0 ? 'bg-blue-50/40' : '';
 
             // Probability display
             const probDisplay = (r.attack_prob !== null && r.attack_prob !== undefined)
-              ? `${(r.attack_prob * 100).toFixed(1)}%`
+              ? `${Number(r.attack_prob).toFixed(1)}%`
               : (r.confidence || '-');
 
             // Ground truth actual label display
-            let actualLabelHtml = '<span class="text-slate-400 font-mono text-[10.5px]">N/A</span>';
+            let actualLabelHtml = '<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[11px] font-mono whitespace-nowrap bg-slate-100 text-slate-500 border border-slate-200">N/A</span>';
             if (r.actual_status) {
               const isActualAtk = r.actual_label === 1 || r.actual_status.includes('Attack');
               actualLabelHtml = isActualAtk
-                ? `<span class="inline-flex font-mono text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded text-[10.5px] border border-rose-200/50">Attack (1)</span>`
-                : `<span class="inline-flex font-mono text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded text-[10.5px] border border-emerald-200/50">Normal (0)</span>`;
+                ? `<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[11px] font-mono whitespace-nowrap text-rose-700 bg-rose-50 border border-rose-200/60">Attack (1)</span>`
+                : `<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[11px] font-mono whitespace-nowrap text-emerald-700 bg-emerald-50 border border-emerald-200/60">Normal (0)</span>`;
             }
 
             // Correctness status badge
-            let statusHtml = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">Actual Labels: Not Available</span>';
+            let statusHtml = '<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[10.5px] font-medium whitespace-nowrap bg-slate-100 text-slate-500 border border-slate-200">Not Available</span>';
             if (r.is_correct === true) {
-              statusHtml = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10.5px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60">Correct</span>';
+              statusHtml = '<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap bg-emerald-50 text-emerald-700 border border-emerald-200/60">Correct</span>';
             } else if (r.is_correct === false) {
-              statusHtml = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10.5px] font-semibold bg-rose-50 text-rose-700 border border-rose-200/60">Mismatch</span>';
+              statusHtml = '<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap bg-rose-50 text-rose-700 border border-rose-200/60">Mismatch</span>';
             }
 
             return `
@@ -2683,19 +2805,19 @@
                   data-dstbytes="${r.dst_bytes !== undefined ? r.dst_bytes : '-'}"
                   data-count="${r.count !== undefined ? r.count : '-'}"
                   data-srvcount="${r.srv_count !== undefined ? r.srv_count : '-'}">
-                <td class="py-2.5 px-3 text-slate-400 text-xs">${r.id}</td>
-                <td class="py-2.5 px-3 font-mono text-slate-800 text-[11.5px]">${r.src || '-'}</td>
-                <td class="py-2.5 px-3 font-mono text-slate-800 text-[11.5px]">${r.dst || '-'}</td>
-                <td class="py-2.5 px-2 font-mono text-[11.5px]">${r.proto || '-'}</td>
-                <td class="py-2.5 px-3">
-                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeClass}">
-                    ${r.prediction}
+                <td class="py-3 px-3 text-slate-400 text-xs text-center align-middle whitespace-nowrap">${r.id}</td>
+                <td class="py-3 px-3 font-mono text-slate-800 text-[11.5px] align-middle whitespace-nowrap">${r.src || '-'}</td>
+                <td class="py-3 px-3 font-mono text-slate-800 text-[11.5px] align-middle whitespace-nowrap">${r.dst || '-'}</td>
+                <td class="py-3 px-3 font-mono text-[11.5px] text-center align-middle whitespace-nowrap">${r.proto || '-'}</td>
+                <td class="py-3 px-3 align-middle whitespace-nowrap">
+                  <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded text-[11px] font-semibold whitespace-nowrap border ${badgeClass}" title="${badgeTitle}">
+                    ${badgeText}
                   </span>
                 </td>
-                <td class="py-2.5 px-3 font-mono text-slate-700 text-xs">${probDisplay}</td>
-                <td class="py-2.5 px-3">${actualLabelHtml}</td>
-                <td class="py-2.5 px-3">${statusHtml}</td>
-                <td class="py-2.5 px-3 text-right">
+                <td class="py-3 px-3 font-mono text-slate-700 text-xs text-center align-middle whitespace-nowrap">${probDisplay}</td>
+                <td class="py-3 px-3 text-center align-middle whitespace-nowrap">${actualLabelHtml}</td>
+                <td class="py-3 px-3 text-center align-middle whitespace-nowrap">${statusHtml}</td>
+                <td class="py-3 px-3 text-center align-middle whitespace-nowrap">
                   <button type="button" class="text-blue-600 hover:text-blue-700 font-medium text-xs">View</button>
                 </td>
               </tr>
@@ -2743,9 +2865,101 @@
       const predEl = document.getElementById('detail-pred');
       if (predEl) {
         if (ds.pred === 'Attack') {
-          predEl.innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-50 text-rose-600 border border-rose-200/60">Attack</span>`;
+          predEl.innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-50 text-rose-600 border border-rose-200/60" title="This traffic was flagged for review">Potentially Suspicious</span>`;
         } else {
-          predEl.innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200/60">Normal</span>`;
+          predEl.innerHTML = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200/60" title="No suspicious pattern was identified">Looks Normal</span>`;
+        }
+      }
+
+      // Dynamic Guidance Questions Update (Using verified record facts only)
+      const whyEl = document.getElementById('detail-guidance-why');
+      const meanEl = document.getElementById('detail-guidance-meaning');
+      const actEl = document.getElementById('detail-guidance-action');
+
+      const isAttack = ds.pred === 'Attack';
+      const proto = ds.proto && ds.proto !== '-' ? ds.proto : null;
+      const src = ds.src && ds.src !== '-' ? ds.src : null;
+      const dst = ds.dst && ds.dst !== '-' ? ds.dst : null;
+      const durationVal = ds.duration && ds.duration !== '-' ? parseFloat(ds.duration) : null;
+      const durationStr = durationVal !== null && !isNaN(durationVal) ? `${durationVal.toFixed(4)}s` : null;
+      const srcBytes = ds.srcbytes && ds.srcbytes !== '-' && !isNaN(Number(ds.srcbytes)) ? Number(ds.srcbytes).toLocaleString() : null;
+      const dstBytes = ds.dstbytes && ds.dstbytes !== '-' && !isNaN(Number(ds.dstbytes)) ? Number(ds.dstbytes).toLocaleString() : null;
+      const attackProbNum = ds.attackprob && !isNaN(parseFloat(ds.attackprob)) ? parseFloat(ds.attackprob) : null;
+      const attackProbStr = attackProbNum !== null ? `${attackProbNum.toFixed(1)}%` : null;
+      const hasActual = Boolean(ds.actualstatus && ds.actualstatus !== 'Not Available');
+      const isCorrect = ds.iscorrect === 'true';
+      const isMismatch = ds.iscorrect === 'false';
+
+      // 1. Why was this flagged? / Why is this considered normal?
+      if (whyEl) {
+        let flowMetrics = '';
+        if (proto && srcBytes !== null && dstBytes !== null) {
+          flowMetrics = ` This ${proto} connection sent ${srcBytes} bytes and received ${dstBytes} bytes${durationStr ? ` over ${durationStr}` : ''}.`;
+        } else if (proto) {
+          flowMetrics = ` Evaluated ${proto} connection traffic details.`;
+        }
+
+        const probSnippet = attackProbStr ? ` Estimated likelihood of suspicious activity is ${attackProbStr}.` : '';
+
+        if (isAttack) {
+          whyEl.textContent = `The system noticed traffic patterns that look different from everyday network activity.${flowMetrics}${probSnippet} These numbers stood out compared to typical baseline traffic.`;
+        } else {
+          whyEl.textContent = `The system checked this connection and found ordinary activity.${flowMetrics}${probSnippet} The transfer size and timing match standard day-to-day network behavior.`;
+        }
+      }
+
+      // 2. What does this mean? (Simple, non-technical explanation)
+      if (meanEl) {
+        let probNote = '';
+        if (attackProbNum !== null) {
+          if (isAttack) {
+            probNote = attackProbNum >= 80
+              ? ` The system gave it a high suspiciousness score (${attackProbStr}).`
+              : ` The system gave it a moderate suspiciousness score (${attackProbStr}).`;
+          } else {
+            probNote = attackProbNum <= 20
+              ? ` The system found only a very low chance (${attackProbStr}) of any issue.`
+              : ` The system found a ${attackProbStr} chance of any issue, well within standard safe limits.`;
+          }
+        }
+
+        let baseMeaning = isAttack
+          ? `A suspicious result is an automated warning based on unusual patterns, not proof of an actual cyberattack.${probNote} Normal activities like large downloads, system backups, or updates can sometimes look unusual.`
+          : `This connection looks safe and routine. The system did not find any signs of harmful activity.${probNote}`;
+
+        if (hasActual) {
+          if (isCorrect) {
+            baseMeaning += ` Both the automated scan and the dataset benchmark label (${ds.actualstatus}) agree.`;
+          } else if (isMismatch) {
+            if (isAttack) {
+              baseMeaning += ` The dataset benchmark marks this as ${ds.actualstatus}. This difference suggests a probable false alarm on otherwise safe traffic.`;
+            } else {
+              baseMeaning += ` The dataset benchmark marks this as ${ds.actualstatus}. While the scan considered it normal, this difference is noted for review.`;
+            }
+          }
+        } else {
+          baseMeaning += ' This file does not include benchmark labels, so this result is based purely on the automated scan.';
+        }
+        meanEl.textContent = baseMeaning;
+      }
+
+      // 3. What should you do? (Clear, practical next steps)
+      if (actEl) {
+        const endpointContext = (src && dst) ? ` between ${src} and ${dst}` : '';
+        if (isAttack) {
+          if (isMismatch && ds.actualstatus && ds.actualstatus.includes('Normal')) {
+            actEl.textContent = `No emergency action needed. Because the benchmark label is Normal, this is likely a false alarm. Simply verify whether this activity was expected on your network.`;
+          } else if (attackProbNum !== null && attackProbNum >= 80) {
+            actEl.textContent = `Check whether this ${proto || 'network'} connection${endpointContext} is expected business traffic. If you do not recognize it, have your IT or security team take a look.`;
+          } else {
+            actEl.textContent = `Keep an eye on this connection${endpointContext}. It is moderately unusual, but usually harmless unless it keeps repeating unexpectedly.`;
+          }
+        } else {
+          if (isMismatch) {
+            actEl.textContent = `Take a quick look when you have time. The system labeled it normal, but the benchmark notes ${ds.actualstatus}, so a quick check ensures everything is in order.`;
+          } else {
+            actEl.textContent = 'No action needed. Everything looks normal, so you can continue routine monitoring.';
+          }
         }
       }
 
@@ -2772,7 +2986,7 @@
       if (atkProbEl) {
         if (ds.attackprob) {
           const probNum = parseFloat(ds.attackprob);
-          atkProbEl.textContent = !isNaN(probNum) ? `${(probNum * 100).toFixed(2)}%` : '-';
+          atkProbEl.textContent = !isNaN(probNum) ? `${probNum.toFixed(1)}%` : '-';
         } else {
           atkProbEl.textContent = '-';
         }
@@ -2884,6 +3098,9 @@
       if (footerNote) {
         footerNote.textContent = 'Showing up to 5 complete raw telemetry records. Server-side validation and model inference execute during preprocessing.';
       }
+
+      const accordion = document.getElementById('csv-preview-accordion');
+      if (accordion) accordion.open = false;
     }
 
     function createStreamingCsvParser(options = {}) {
@@ -3373,8 +3590,15 @@
       const btn = document.getElementById('start-preprocess-btn');
       if (btn) {
         btn.disabled = false;
-        btn.classList.remove('opacity-75', 'cursor-not-allowed');
+        btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>Analyze Network Traffic</span>`;
+        btn.className = "w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm transition flex items-center justify-center gap-1.5";
       }
+
+      const anotherBtn = document.getElementById('analyze-another-btn');
+      if (anotherBtn) anotherBtn.classList.add('hidden');
+
+      const noteEl = document.getElementById('preprocess-btn-note');
+      if (noteEl) noteEl.textContent = 'Select this button to analyze the uploaded records.';
 
       // Reset Detection Results UI to empty state without reloading
       loadDetectionResults(1);
@@ -3496,6 +3720,8 @@
       const formData = new FormData();
       formData.append('file', selectedCsvFile);
 
+      let isSuccess = false;
+
       try {
         const res = await fetch('/api/predict', {
           method: 'POST',
@@ -3549,6 +3775,18 @@
         renderSessionSummary(summary);
         loadDetectionResults(1);
 
+        // Transition to completed state
+        isSuccess = true;
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = `<svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg><span>Analysis Complete</span>`;
+          btn.className = "w-full py-2 px-3 bg-emerald-600 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center justify-center gap-1.5 cursor-default";
+        }
+        const anotherBtn = document.getElementById('analyze-another-btn');
+        if (anotherBtn) anotherBtn.classList.remove('hidden');
+        const noteEl = document.getElementById('preprocess-btn-note');
+        if (noteEl) noteEl.textContent = 'Analysis complete. Review summary below or view detailed results.';
+
       } catch (err) {
         if (capturedGen !== detectionSessionGeneration || capturedFile !== selectedCsvFile || !selectedCsvFile) {
           return;
@@ -3559,10 +3797,10 @@
         pipelineProgress.activeStep = 3;
         updatePipelineStepper();
       } finally {
-        if (btn) {
+        if (!isSuccess && btn) {
           btn.disabled = false;
-          btn.textContent = 'Start Preprocessing';
-          btn.classList.remove('opacity-75', 'cursor-not-allowed');
+          btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>Analyze Network Traffic</span>`;
+          btn.className = "w-full py-2 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium shadow-sm transition flex items-center justify-center gap-1.5";
         }
       }
     }
